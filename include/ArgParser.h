@@ -55,7 +55,7 @@ namespace carg
 		std::vector<CMDTypes> m_arg_types;
 		// What seperates the arguments when passing it to a key
 		char m_seperator;
-		// Range of number of possible instances
+		// Range of possible instances
 		std::pair<unsigned int, unsigned int> m_instances;
 
 	public:
@@ -91,7 +91,7 @@ namespace carg
 		// Takes a vector of keys and sets their properties to default
 		ArgParser(const std::vector<std::string>& keys);
 
-		// Appends a key and propertie to the argument map
+		// Appends a key and property to the argument map
 		void addArg(std::string key, ArgProp properties = ArgProp());
 		// Removes a key and propertie to the argument map
 		void removeArg(std::string key);
