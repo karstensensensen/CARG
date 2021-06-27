@@ -81,6 +81,14 @@ namespace carg
 		return false;
 	}
 
+	ArgParser::ArgParser(const std::vector<std::string>& keys)
+	{
+		for (const std::string& key : keys)
+		{
+			m_arg_map.emplace(key, ArgProp());
+		}
+	}
+
 	void ArgParser::addArg(std::string key, ArgProp properties)
 	{
 		m_arg_map.emplace(key, properties);

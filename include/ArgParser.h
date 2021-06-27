@@ -86,8 +86,10 @@ namespace carg
 		std::map<std::string, ArgProp> m_arg_map;
 	public:
 		ArgParser() = default;
-		// Takes a string of keys and properties
+		// Takes a vector of keys and properties
 		ArgParser(const std::map<std::string, ArgProp>& arg_map) : m_arg_map(arg_map) {};
+		// Takes a vector of keys and sets their properties to default
+		ArgParser(const std::vector<std::string>& keys);
 
 		// Appends a key and propertie to the argument map
 		void addArg(std::string key, ArgProp properties = ArgProp());
