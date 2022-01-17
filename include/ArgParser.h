@@ -10,7 +10,7 @@ namespace carg
 
 		static const std::regex m_natural_regex;
 		static const std::regex m_real_regex;
-		static const std::vector<std::regex> m_bool_regex;
+		static const std::array<std::regex, 2> m_bool_regex;
 
 	public:
 
