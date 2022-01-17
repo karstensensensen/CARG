@@ -1,5 +1,5 @@
 # CARG
-A simple library for parsing command line arguments.
+A simple library for parsing command line arguments for the C++ language.
 
 ### building
 Uses CMake to generate and build library.
