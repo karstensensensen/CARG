@@ -7,7 +7,7 @@ namespace carg
 
 	const std::regex Args::m_natural_regex = std::regex("^(-?[0-9]+)$");
 	const std::regex Args::m_real_regex = std::regex("^(-?[0-9]+)(\\.?[0-9]+)?$");
-	const std::vector<std::regex> Args::m_bool_regex = { std::regex("^[f/F]alse$"), std::regex("^[t/T]rue$") };
+	const std::array<std::regex, 2> Args::m_bool_regex = { std::regex("^[f/F]alse$"), std::regex("^[t/T]rue$") };
 
 	long long Args::getNumber(size_t index) const
 	{
