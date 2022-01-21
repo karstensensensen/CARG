@@ -47,7 +47,12 @@ namespace carg
 		return hasOption(m_bool_regex, index);
 	}
 
-	size_t Args::getOption(const std::vector<std::regex>& regexes, size_t index) const
+	bool Args::isNone(size_t index) const
+	{
+		return getArg(index) == "";
+	}
+
+	size_t Args::getOption(const std::array<std::regex, 2>& regexes, size_t index) const
 	{
 		const std::string& arg = getArg(index);
 		for (size_t i = 0; i < regexes.size(); i++)
@@ -65,7 +70,7 @@ namespace carg
 		throw NoValidOption(arg);
 	}
 
-	bool Args::hasOption(const std::vector<std::regex>& regexes, size_t index) const
+	bool Args::hasOption(const std::array<std::regex, 2>& regexes, size_t index) const
 	{
 		const std::string& arg = getArg(index);
 		for (const auto& regex: regexes)
@@ -118,6 +123,7 @@ namespace carg
 				{
 					std::vector<std::string> args;
 					args.reserve(props.argCount());
+
 					if (props.seperator() == ' ')
 					{
 						for (int i = 0; i < props.argCount(); i++)

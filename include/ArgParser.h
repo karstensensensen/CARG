@@ -29,23 +29,26 @@ namespace carg
 		bool isReal(size_t index = 0) const;
 		bool getBool(size_t index = 0) const;
 		bool isBool(size_t index = 0) const;
+		bool isNone(size_t index = 0) const;
 
 		// Returns which regex matches the index argument first
 		// S = takes std::string as argument instead of std::regex
 
-		size_t getOption(const std::vector<std::regex>& regexes, size_t index = 0) const;
+		size_t getOption(const std::array<std::regex, 2>& regexes, size_t index = 0) const;
 		size_t getOptionS(const std::vector<std::string>& regexes, size_t index = 0) const;
-		bool hasOption(const std::vector<std::regex>& regexes, size_t index = 0) const;
+		bool hasOption(const std::array<std::regex, 2>& regexes, size_t index = 0) const;
 		bool hasOptionS(const std::vector<std::string>& regexes, size_t index = 0) const;
 	};
 
 	// What types the command line arguments can be converted to
+	// if None, no arguments should be passed
 	enum class CMDTypes
 	{
 		String,
 		Natural,
 		Real,
-		Bool
+		Bool,
+		None
 	};
 
 	// Properties for arguments to a given key
@@ -59,15 +62,27 @@ namespace carg
 		std::pair<unsigned int, unsigned int> m_instances;
 
 	public:
-		ArgProp(size_t arg_count = 1, CMDTypes type = CMDTypes::String, char seperator = ' ', unsigned int min_instances = 0, unsigned int max_instances = UINT_MAX)
-			: m_arg_types(arg_count, type), m_seperator(seperator), m_instances(min_instances, max_instances) {
+		ArgProp(CMDTypes type = CMDTypes::String, char seperator = ' ', unsigned int min_instances = 0, unsigned int max_instances = UINT_MAX)
+			: m_arg_types(1, type), m_seperator(seperator), m_instances(min_instances, max_instances) {
 			assert(min_instances <= max_instances);
+
+			if (type == CMDTypes::None)
+				m_arg_types = {};
 		};
+
 
 		ArgProp(const std::vector<CMDTypes>& arg_types, char seperator = ' ', unsigned int min_instances = 0, unsigned int max_instances = UINT_MAX)
 			: m_arg_types(arg_types), m_seperator(seperator), m_instances(min_instances, max_instances) {
 			assert(min_instances <= max_instances);
 		};
+
+		ArgProp(unsigned int min_instances, unsigned int max_instances = UINT_MAX, CMDTypes type = CMDTypes::String)
+			: ArgProp(type, ' ', min_instances, max_instances)
+		{}
+
+		ArgProp(char seperator, CMDTypes type = CMDTypes::String)
+			: ArgProp(type, seperator)
+		{}
 
 		int argCount()  const{ return (int) m_arg_types.size(); }
 		CMDTypes argType(size_t arg_i) const { return m_arg_types[arg_i]; }
